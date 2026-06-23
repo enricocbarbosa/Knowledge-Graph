@@ -1,0 +1,109 @@
+@prefix ex:   <http://example.org/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+########## CLASSES ##########
+
+ex:Aluno     a rdfs:Class .
+ex:Professor a rdfs:Class .
+ex:Curso     a rdfs:Class .
+ex:Cidade    a rdfs:Class .
+ex:Endereco  a rdfs:Class .
+
+########## CURSOS ##########
+
+ex:INF101 a ex:Curso ;
+    rdfs:label "Introdução à Computação"@pt ,
+               "Introduction to Computing"@en .
+
+ex:MAT202 a ex:Curso ;
+    rdfs:label "Cálculo II"@pt ,
+               "Calculus II"@en .
+
+########## ALUNOS ##########
+
+ex:Ana a ex:Aluno ;
+    ex:nome "Ana"@pt ;
+    ex:idade "23"^^xsd:integer ;
+    ex:amigoDe ex:Pedro , ex:Bruno ;
+    ex:matriculadoEm ex:INF101 ;
+    ex:endereco _:end1 .
+
+# endereço como blank node
+_:end1 a ex:Endereco ;
+    ex:rua "Rua A" ;
+    ex:numero "10"^^xsd:integer .
+
+ex:Pedro a ex:Aluno ;
+    ex:nome "Pedro"@pt ;
+    ex:idade "19"^^xsd:integer ;
+    ex:amigoDe ex:Ana ;
+    ex:matriculadoEm ex:INF101 ;
+    ex:endereco _:end2 .
+
+_:end2 a ex:Endereco ;
+    ex:rua "Rua B" ;
+    ex:numero "55"^^xsd:integer .
+
+# Aluno SEM matrícula (para NOT EXISTS / MINUS)
+ex:Bruno a ex:Aluno ;
+    ex:nome "Bruno"@pt ;
+    ex:idade "17"^^xsd:integer .
+
+# Aluno que começa com A (regex "^A")
+ex:Carla a ex:Aluno ;
+    ex:nome "Alice"@en ;
+    ex:idade "21"^^xsd:integer ;
+    ex:matriculadoEm ex:MAT202 .
+
+########## PROFESSORES ##########
+
+# Professor COM email
+ex:ProfJoao a ex:Professor ;
+    ex:nome "João Silva"@pt ;
+    ex:email "joao.silva@example.org" ;
+    ex:leciona ex:INF101 .
+
+# Professor SEM email → para OPTIONAL + BOUND
+ex:ProfMaria a ex:Professor ;
+    ex:nome "Maria Green"@en ;
+    ex:leciona ex:MAT202 .
+
+########## CIDADES (para LANG / LANGMATCHES) ##########
+
+ex:RioDeJaneiro a ex:Cidade ;
+    rdfs:label "Rio de Janeiro"@pt ,
+               "Rio de Janeiro"@en .
+
+ex:Paris a ex:Cidade ;
+    rdfs:label "Paris"@fr ,
+               "Paris"@en .
+
+ex:Berlin a ex:Cidade ;
+    rdfs:label "Berlim"@pt ,
+               "Berlin"@de ,
+               "Berlin"@en .
+
+########## EXEMPLO DE owl:sameAs ##########
+
+# Equivalência entre IRIs
+ex:RioDeJaneiro owl:sameAs <http://dbpedia.org/resource/Rio_de_Janeiro> .
+
+########## PROPRIEDADES SIMÉTRICAS, FUNCIONAIS E OUTRAS ##########
+
+ex:amigoDe a rdf:Property ;
+    rdf:type owl:SymmetricProperty .
+
+ex:email a rdf:Property ;
+    rdf:type owl:FunctionalProperty .
+
+ex:matriculadoEm a rdf:Property .
+
+ex:leciona a rdf:Property .
+
+ex:endereco a rdf:Property .
+
+ex:rua a rdf:Property .
+ex:numero a rdf:Property .

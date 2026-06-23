@@ -1,0 +1,119 @@
+import rdflib
+@prefix ex:   <http://example.org/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+########## CLASSES ##########
+
+ex:Jogador       a rdfs:Class .
+ex:Titulo        a rdfs:Class .
+ex:Nacionalidade a rdfs:Class .
+ex:Desempenho    a rdfs:Class .
+
+########## TITULOS ##########
+
+ex:Libertadores1981 a ex:Titulo ;
+    rdfs:label "Copa Libertadores da América de 1981"@pt ,
+               "1981 Copa Libertadores"@en .
+
+ex:Libertadores2019 a ex:Titulo ;
+    rdfs:label "Copa Libertadores da América de 2019"@pt ,
+               "2019 Copa Libertadores"@en .
+
+########## JOGADORES ##########
+
+# Jogador COM apelido
+ex:Zico a ex:Jogador ;
+    ex:nome "Arthur Antunes Coimbra"@pt ;
+    ex:idade "71"^^xsd:integer ;
+    ex:apelido "Galinho de Quintino" ;
+    ex:jogouCom ex:Junior ;
+    ex:conquistou ex:Libertadores1981 ;
+    ex:nacionalidade ex:Brasil ;
+    ex:desempenho _:des1 .
+
+# desempenho como blank node (análogo ao endereço)
+_:des1 a ex:Desempenho ;
+    ex:gols "508"^^xsd:integer ;
+    ex:partidas "732"^^xsd:integer .
+
+# Jogador SEM apelido → para OPTIONAL + BOUND
+ex:Junior a ex:Jogador ;
+    ex:nome "Leovegildo Lins da Gama Júnior"@pt ;
+    ex:idade "69"^^xsd:integer ;
+    ex:jogouCom ex:Zico ;
+    ex:conquistou ex:Libertadores1981 ;
+    ex:nacionalidade ex:Brasil ;
+    ex:desempenho _:des2 .
+
+_:des2 a ex:Desempenho ;
+    ex:gols "77"^^xsd:integer ;
+    ex:partidas "876"^^xsd:integer .
+
+# Jogador SEM título (para NOT EXISTS / MINUS)
+ex:Petkovic a ex:Jogador ;
+    ex:nome "Dejan Petković"@sr ;
+    ex:idade "51"^^xsd:integer ;
+    ex:nacionalidade ex:Servia ;
+    ex:apelido "Pet" .
+
+# Jogador que começa com A (regex "^A")
+ex:Arrascaeta a ex:Jogador ;
+    ex:nome "Arrascaeta"@es ;
+    ex:idade "29"^^xsd:integer ;
+    ex:conquistou ex:Libertadores2019 ;
+    ex:nacionalidade ex:Uruguai ;
+    ex:jogouCom ex:Gabigol .
+
+ex:Gabigol a ex:Jogador ;
+    ex:nome "Gabriel Barbosa"@pt ;
+    ex:idade "27"^^xsd:integer ;
+    ex:conquistou ex:Libertadores2019 ;
+    ex:nacionalidade ex:Brasil ;
+    ex:jogouCom ex:Arrascaeta ;
+    ex:apelido "Gabi" .
+
+########## NACIONALIDADES (para LANG / LANGMATCHES) ##########
+
+ex:Brasil a ex:Nacionalidade ;
+    rdfs:label "Brasil"@pt ,
+               "Brazil"@en .
+
+ex:Uruguai a ex:Nacionalidade ;
+    rdfs:label "Uruguai"@pt ,
+               "Uruguay"@en ,
+               "Uruguay"@es .
+
+ex:Servia a ex:Nacionalidade ;
+    rdfs:label "Sérvia"@pt ,
+               "Serbia"@en ,
+               "Србија"@sr .
+
+########## EXEMPLO DE owl:sameAs ##########
+
+# Equivalência entre IRIs
+ex:Zico owl:sameAs <http://dbpedia.org/resource/Zico_(footballer)> .
+
+########## PROPRIEDADES SIMÉTRICAS, FUNCIONAIS E OUTRAS ##########
+
+ex:jogouCom a rdf:Property ;
+    rdf:type owl:SymmetricProperty .
+
+ex:idade a rdf:Property ;
+    rdf:type owl:FunctionalProperty .
+
+ex:conquistou a rdf:Property .
+
+ex:nacionalidade a rdf:Property .
+
+ex:desempenho a rdf:Property .
+
+ex:gols a rdf:Property .
+
+ex:partidas a rdf:Property .
+
+ex:nome a rdf:Property .
+
+ex:apelido a rdf:Property .
