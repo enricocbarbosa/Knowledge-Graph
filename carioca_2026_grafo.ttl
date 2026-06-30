@@ -1,0 +1,320 @@
+@prefix ex:   <http://example.org/> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+########## DECLARAÇÃO DAS CLASSES ##########
+
+ex:Campeonato    a rdfs:Class ; rdfs:label "Campeonato de Futebol"@pt .
+ex:Clube         a rdfs:Class ; rdfs:label "Clube de Futebol"@pt .
+ex:Estadio       a rdfs:Class ; rdfs:label "Estádio de Futebol"@pt .
+ex:Pessoa        a rdfs:Class ; rdfs:label "Pessoa do Contexto Esportivo"@pt .
+
+ex:Jogador       rdfs:subClassOf ex:Pessoa ; rdfs:label "Jogador"@pt .
+ex:Treinador     rdfs:subClassOf ex:Pessoa ; rdfs:label "Treinador"@pt .
+ex:Arbitro       rdfs:subClassOf ex:Pessoa ; rdfs:label "Árbitro de Futebol"@pt .
+
+ex:Partida       a rdfs:Class ; rdfs:label "Partida de Futebol Oficial"@pt .
+ex:EventoJogo    a rdfs:Class ; rdfs:label "Evento Ocorrido em Partida"@pt .
+ex:Gol           rdfs:subClassOf ex:EventoJogo .
+ex:Cartao        rdfs:subClassOf ex:EventoJogo .
+ex:Substituicao  rdfs:subClassOf ex:EventoJogo .
+
+########## PROPRIEDADES (CONSTRUTORES E REGRAS) ##########
+
+ex:nome a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:estadio a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:data a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:horario a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:publico a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:renda a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:arbitroPrincipal a rdf:Property ; rdf:type owl:FunctionalProperty .
+
+ex:campeao a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:viceCampeao a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:artilheiro a rdf:Property .
+ex:melhorJogador a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:melhorTreinador a rdf:Property ; rdf:type owl:FunctionalProperty .
+
+ex:mandante a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:visitante a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:golsMandante a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:golsVisitante a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:golsPenaltisMandante a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:golsPenaltisVisitante a rdf:Property ; rdf:type owl:FunctionalProperty .
+
+ex:tecnicoMandante a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:tecnicoVisitante a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:temEvento a rdf:Property .
+ex:minuto a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:envolveJogador a rdf:Property .
+ex:saiJogador a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:entraJogador a rdf:Property ; rdf:type owl:FunctionalProperty .
+ex:tipoCartao a rdf:Property ; rdf:type owl:FunctionalProperty .
+
+# Propriedade simétrica obrigatória pelas regras estruturais
+ex:rivalDe a rdf:Property ; rdf:type owl:SymmetricProperty .
+
+########## ENTIDADES MACRO E ESTÁDIOS ##########
+
+ex:Cariocao2026 a ex:Campeonato ;
+    rdfs:label "Campeonato Carioca de Futebol 2026"@pt , "2026 Carioca Football Championship"@en ;
+    ex:campeao ex:Flamengo ;
+    ex:viceCampeao ex:Fluminense ;
+    ex:artilheiro ex:Pedro , ex:PatryckMagalhaes ;
+    ex:melhorJogador ex:Fabio ;
+    ex:melhorTreinador ex:Zubeldia .
+
+ex:Maracana a ex:Estadio ; ex:nome "Estádio Jornalista Mário Filho"@pt , "Maracanã"@en .
+ex:NiltonSantos a ex:Estadio ; ex:nome "Estádio Nilton Santos"@pt .
+
+########## CLUBES E RELAÇÕES SIMÉTRICAS ##########
+
+ex:Flamengo a ex:Clube ;
+    ex:nome "Clube de Regatas do Flamengo"@pt ;
+    ex:rivalDe ex:Fluminense , ex:Vasco .
+
+ex:Fluminense a ex:Clube ;
+    ex:nome "Fluminense Football Club"@pt ;
+    ex:rivalDe ex:Flamengo .
+
+ex:Vasco a ex:Clube ;
+    ex:nome "Club de Regatas Vasco da Gama"@pt ;
+    ex:rivalDe ex:Flamengo .
+
+ex:Madureira a ex:Clube ;
+    ex:nome "Madureira Esporte Clube"@pt .
+
+########## COMISSÕES TÉCNICAS E ÁRBITROS ##########
+
+ex:FilipeLuis a ex:Treinador ; ex:nome "Filipe Luís"@pt .
+ex:LeonardoJardim a ex:Treinador ; ex:nome "Leonardo Jardim"@pt .
+ex:Zubeldia a ex:Treinador ; ex:nome "Luis Zubeldía"@pt .
+ex:BrunoArleu a ex:Arbitro ; ex:nome "Bruno Arleu de Araújo"@pt .
+ex:WagnerMagalhaes a ex:Arbitro ; ex:nome "Wagner do Nascimento Magalhães"@pt .
+
+########## JOGADORES (ELENCOS ATIVOS) ##########
+
+# Flamengo
+ex:Rossi a ex:Jogador ; ex:nome "Agustín Rossi"@pt .
+ex:MatheusCunha a ex:Jogador ; ex:nome "Matheus Cunha"@pt .
+ex:Danilo a ex:Jogador ; ex:nome "Danilo"@pt .
+ex:LeoPereira a ex:Jogador ; ex:nome "Léo Pereira"@pt .
+ex:AlexSandro a ex:Jogador ; ex:nome "Alex Sandro"@pt .
+ex:Varela a ex:Jogador ; ex:nome "Guillermo Varela"@pt .
+ex:EmersonRoyal a ex:Jogador ; ex:nome "Emerson Royal"@pt .
+ex:Vitao a ex:Jogador ; ex:nome "Vitão"@pt .
+ex:FabricioBruno a ex:Jogador ; ex:nome "Fabrício Bruno"@pt .
+ex:ErickPulgar a ex:Jogador ; ex:nome "Erick Pulgar"@pt .
+ex:LucasPaqueta a ex:Jogador ; ex:nome "Lucas Paquetá"@pt .
+ex:Arrascaeta a ex:Jogador ; ex:nome "Giorgian De Arrascaeta"@pt .
+ex:DeLaCruz a ex:Jogador ; ex:nome "Nicolás de la Cruz"@pt .
+ex:EverttonAraujo a ex:Jogador ; ex:nome "Evertton Araújo"@pt .
+ex:Jorginho a ex:Jogador ; ex:nome "Jorginho"@pt .
+ex:JorgeCarrascal a ex:Jogador ; ex:nome "Jorge Carrascal"@pt .
+ex:Pedro a ex:Jogador ; ex:nome "Pedro Guilherme"@pt .
+ex:EvertonCebolinha a ex:Jogador ; ex:nome "Éverton Cebolinha"@pt .
+ex:GonzaloPlata a ex:Jogador ; ex:nome "Gonzalo Plata"@pt .
+ex:BrunoHenrique a ex:Jogador ; ex:nome "Bruno Henrique"@pt .
+ex:LuizAraujo a ex:Jogador ; ex:nome "Luiz Araújo"@pt .
+ex:SamuelLino a ex:Jogador ; ex:nome "Samuel Lino"@pt .
+
+# Fluminense
+ex:Fabio a ex:Jogador ; ex:nome "Fábio"@pt .
+ex:VitorEudes a ex:Jogador ; ex:nome "Vitor Eudes"@pt .
+ex:SamuelXavier a ex:Jogador ; ex:nome "Samuel Xavier"@pt .
+ex:Guga a ex:Jogador ; ex:nome "Guga"@pt .
+ex:Jemmes a ex:Jogador ; ex:nome "Jemmes"@pt .
+ex:Freytes a ex:Jogador ; ex:nome "Rodrigo Freytes"@pt .
+ex:Ignacio a ex:Jogador ; ex:nome "Ignácio"@pt .
+ex:GuilhermeArana a ex:Jogador ; ex:nome "Guilherme Arana"@pt .
+ex:Rene a ex:Jogador ; ex:nome "Renê"@pt .
+ex:IgorRabello a ex:Jogador ; ex:nome "Igor Rabello"@pt .
+ex:JonathanJesus a ex:Jogador ; ex:nome "Jonathan Jesus"@pt .
+ex:Martinelli a ex:Jogador ; ex:nome "Martinelli"@pt .
+ex:FacundoBernal a ex:Jogador ; ex:nome "Facundo Bernal"@pt .
+ex:Hercules a ex:Jogador ; ex:nome "Hércules"@pt .
+ex:LuchoAcosta a ex:Jogador ; ex:nome "Lucho Acosta"@pt .
+ex:Ganso a ex:Jogador ; ex:nome "Paulo Henrique Ganso"@pt .
+ex:Soteldo a ex:Jogador ; ex:nome "Yeferson Soteldo"@pt .
+ex:Savarino a ex:Jogador ; ex:nome "Jefferson Savarino"@pt .
+ex:JulianMillan a ex:Jogador ; ex:nome "Julián Millán"@pt .
+ex:JohnKennedy a ex:Jogador ; ex:nome "Jhon Kennedy"@pt .
+ex:KevinSerna a ex:Jogador ; ex:nome "Kevin Serna"@pt .
+ex:Canobbio a ex:Jogador ; ex:nome "Agustín Canobbio"@pt .
+ex:GermanCano a ex:Jogador ; ex:nome "Germán Cano"@pt .
+ex:BrunoRodrigues a ex:Jogador ; ex:nome "Bruno Rodrigues"@pt .
+
+# Vasco
+ex:LeoJardim a ex:Jogador ; ex:nome "Léo Jardim"@pt .
+ex:RobertRenan a ex:Jogador ; ex:nome "Robert Renan"@pt .
+ex:LucasPiton a ex:Jogador ; ex:nome "Lucas Piton"@pt .
+ex:Maicon a ex:Jogador ; ex:nome "Maicon"@pt .
+ex:PumaRodriguez a ex:Jogador ; ex:nome "Puma Rodríguez"@pt .
+ex:Barros a ex:Jogador ; ex:nome "Barros"@pt .
+ex:HugoMoura a ex:Jogador ; ex:nome "Hugo Moura"@pt .
+ex:Payet a ex:Jogador ; ex:nome "Dimitri Payet"@pt .
+ex:JohanRojas a ex:Jogador ; ex:nome "Johan Rojas"@pt .
+ex:AndresGomez a ex:Jogador ; ex:nome "Andrés Gómez"@pt .
+ex:Vegetti a ex:Jogador ; ex:nome "Pablo Vegetti"@pt .
+ex:Rayan a ex:Jogador ; ex:nome "Rayan"@pt .
+
+# Madureira
+ex:Neguete a ex:Jogador ; ex:nome "Neguete"@pt .
+ex:Marcao a ex:Jogador ; ex:nome "Marcão"@pt .
+ex:Jaco a ex:Jogador ; ex:nome "Jacó"@pt .
+ex:Almir a ex:Jogador ; ex:nome "Almir"@pt .
+ex:WallaceCamilo a ex:Jogador ; ex:nome "Wallace Camilo"@pt .
+ex:CauaCoutinho a ex:Jogador ; ex:nome "Cauã Coutinho"@pt .
+ex:Rodrigo a ex:Jogador ; ex:nome "Rodrigo"@pt .
+ex:PatryckMagalhaes a ex:Jogador ; ex:nome "Patryck Magalhães"@pt .
+ex:Gustavo a ex:Jogador ; ex:nome "Gustavo"@pt .
+ex:Jean a ex:Jogador ; ex:nome "Jean"@pt .
+
+########## HISTÓRICO DE PARTIDAS E SEUS MICRO-EVENTOS ##########
+
+### 1. GRANDE FINAL (JOGO ÚNICO)
+ex:Partida_Final a ex:Partida ;
+    ex:mandante ex:Flamengo ;
+    ex:visitante ex:Fluminense ;
+    ex:golsMandante "0"^^xsd:integer ;
+    ex:golsVisitante "0"^^xsd:integer ;
+    ex:golsPenaltisMandante "5"^^xsd:integer ;
+    ex:golsPenaltisVisitante "4"^^xsd:integer ;
+    ex:estadio ex:Maracana ;
+    ex:data "2026-03-08"^^xsd:date ;
+    ex:horario "18:00" ;
+    ex:publico "69315"^^xsd:integer ;
+    ex:renda "5270903.50"^^xsd:decimal ;
+    ex:arbitroPrincipal ex:BrunoArleu ;
+    ex:tecnicoMandante ex:LeonardoJardim ;
+    ex:tecnicoVisitante ex:Zubeldia ;
+    ex:temEvento _:cf1 , _:cf2 , _:cf3 , _:cf4 , _:cf5 , _:cf6 ;
+    ex:temEvento _:sf1 , _:sf2 , _:sf3 , _:sf4 , _:sf5 , _:sf6 , _:sf7 .
+
+# Lances detalhados da Final (com minutos)
+_:cf1 a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Rene ; ex:minuto "21"^^xsd:integer .
+_:cf2 a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:LuchoAcosta ; ex:minuto "44"^^xsd:integer .
+_:cf3 a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Canobbio ; ex:minuto "56"^^xsd:integer .
+_:cf4 a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:SamuelLino ; ex:minuto "62"^^xsd:integer .
+_:cf5 a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Jorginho ; ex:minuto "67"^^xsd:integer .
+_:cf6 a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:KevinSerna ; ex:minuto "92"^^xsd:integer .
+
+_:sf1 a ex:Substituicao ; ex:saiJogador ex:GonzaloPlata ; ex:entraJogador ex:LuizAraujo ; ex:minuto "65"^^xsd:integer .
+_:sf2 a ex:Substituicao ; ex:saiJogador ex:SamuelLino ; ex:entraJogador ex:BrunoHenrique ; ex:minuto "70"^^xsd:integer .
+_:sf3 a ex:Substituicao ; ex:saiJogador ex:Arrascaeta ; ex:entraJogador ex:DeLaCruz ; ex:minuto "78"^^xsd:integer .
+_:sf4 a ex:Substituicao ; ex:saiJogador ex:ErickPulgar ; ex:entraJogador ex:Jorginho ; ex:minuto "67"^^xsd:integer .
+_:sf5 a ex:Substituicao ; ex:saiJogador ex:Hercules ; ex:entraJogador ex:Ganso ; ex:minuto "60"^^xsd:integer .
+_:sf6 a ex:Substituicao ; ex:saiJogador ex:Canobbio ; ex:entraJogador ex:Savarino ; ex:minuto "72"^^xsd:integer .
+_:sf7 a ex:Substituicao ; ex:saiJogador ex:Rene ; ex:entraJogador ex:GuilhermeArana ; ex:minuto "80"^^xsd:integer .
+
+
+### 2. SEMIFINAL 1 - JOGO DE IDA
+ex:Semifinal1_Ida a ex:Partida ;
+    ex:mandante ex:Flamengo ;
+    ex:visitante ex:Madureira ;
+    ex:golsMandante "3"^^xsd:integer ;
+    ex:golsVisitante "0"^^xsd:integer ;
+    ex:estadio ex:Maracana ;
+    ex:data "2026-02-22"^^xsd:date ;
+    ex:horario "20:30" ;
+    ex:tecnicoMandante ex:FilipeLuis ;
+    ex:temEvento _:g1_s1i , _:g2_s1i , _:g3_s1i ;
+    ex:temEvento _:c1_s1i , _:c2_s1i , _:c3_s1i , _:c4_s1i , _:c5_s1i ;
+    ex:temEvento _:s1_s1i , _:s2_s1i .
+
+_:g1_s1i a ex:Gol ; ex:envolveJogador ex:DeLaCruz ; ex:minuto "11"^^xsd:integer .
+_:g2_s1i a ex:Gol ; ex:envolveJogador ex:LuizAraujo ; ex:minuto "40"^^xsd:integer .
+_:g3_s1i a ex:Gol ; ex:envolveJogador ex:Pedro ; ex:minuto "85"^^xsd:integer .
+
+_:c1_s1i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:GonzaloPlata ; ex:minuto "34"^^xsd:integer .
+_:c2_s1i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:EverttonAraujo ; ex:minuto "72"^^xsd:integer .
+_:c3_s1i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:CauaCoutinho ; ex:minuto "19"^^xsd:integer .
+_:c4_s1i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Jaco ; ex:minuto "55"^^xsd:integer .
+_:c5_s1i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Marcao ; ex:minuto "81"^^xsd:integer .
+
+_:s1_s1i a ex:Substituicao ; ex:saiJogador ex:DeLaCruz ; ex:entraJogador ex:LucasPaqueta ; ex:minuto "12"^^xsd:integer .
+_:s2_s1i a ex:Substituicao ; ex:entraJogador ex:LuizAraujo ; ex:minuto "75"^^xsd:integer .
+
+
+### 3. SEMIFINAL 1 - JOGO DE VOLTA
+ex:Semifinal1_Volta a ex:Partida ;
+    ex:mandante ex:Madureira ;
+    ex:visitante ex:Flamengo ;
+    ex:golsMandante "0"^^xsd:integer ;
+    ex:golsVisitante "8"^^xsd:integer ;
+    ex:estadio ex:Maracana ;
+    ex:data "2026-03-02"^^xsd:date ;
+    ex:horario "21:00" ;
+    ex:tecnicoVisitante ex:FilipeLuis ;
+    ex:temEvento _:g1_s1v , _:g2_s1v , _:g3_s1v , _:g4_s1v , _:g5_s1v , _:g6_s1v , _:g7_s1v , _:g8_s1v ;
+    ex:temEvento _:c1_s1v , _:c2_s1v ;
+    ex:temEvento _:s1_s1v , _:s2_s1v , _:s3_s1v , _:s4_s1v .
+
+_:g1_s1v a ex:Gol ; ex:envolveJogador ex:LucasPaqueta ; ex:minuto "4"^^xsd:integer .
+_:g2_s1v a ex:Gol ; ex:envolveJogador ex:LucasPaqueta ; ex:minuto "28"^^xsd:integer .
+_:g3_s1v a ex:Gol ; ex:envolveJogador ex:Jean ; ex:minuto "37"^^xsd:integer .
+_:g4_s1v a ex:Gol ; ex:envolveJogador ex:Pedro ; ex:minuto "46"^^xsd:integer .
+_:g5_s1v a ex:Gol ; ex:envolveJogador ex:Pedro ; ex:minuto "53"^^xsd:integer .
+_:g6_s1v a ex:Gol ; ex:envolveJogador ex:Pedro ; ex:minuto "61"^^xsd:integer .
+_:g7_s1v a ex:Gol ; ex:envolveJogador ex:Pedro ; ex:minuto "77"^^xsd:integer .
+_:g8_s1v a ex:Gol ; ex:envolveJogador ex:SamuelLino ; ex:minuto "89"^^xsd:integer .
+
+_:c1_s1v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:EverttonAraujo ; ex:minuto "42"^^xsd:integer .
+_:c2_s1v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Neguete ; ex:minuto "60"^^xsd:integer .
+
+_:s1_s1v a ex:Substituicao ; ex:entraJogador ex:AlexSandro ; ex:minuto "46"^^xsd:integer .
+_:s2_s1v a ex:Substituicao ; ex:entraJogador ex:Vitao ; ex:minuto "46"^^xsd:integer .
+_:s3_s1v a ex:Substituicao ; ex:entraJogador ex:EmersonRoyal ; ex:minuto "55"^^xsd:integer .
+_:s4_s1v a ex:Substituicao ; ex:entraJogador ex:JorgeCarrascal ; ex:minuto "62"^^xsd:integer .
+
+
+### 4. SEMIFINAL 2 - JOGO DE IDA
+ex:Semifinal2_Ida a ex:Partida ;
+    ex:mandante ex:Vasco ;
+    ex:visitante ex:Fluminense ;
+    ex:golsMandante "0"^^xsd:integer ;
+    ex:golsVisitante "1"^^xsd:integer ;
+    ex:estadio ex:NiltonSantos ;
+    ex:data "2026-02-22"^^xsd:date ;
+    ex:horario "18:00" ;
+    ex:tecnicoVisitante ex:Zubeldia ;
+    ex:temEvento _:c1_s2i , _:c2_s2i , _:c3_s2i , _:c4_s2i , _:c5_s2i , _:c6_s2i , _:c7_s2i , _:c8_s2i , _:c9_s2i .
+
+_:c1_s2i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:AndresGomez ; ex:minuto "15"^^xsd:integer .
+_:c2_s2i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Barros ; ex:minuto "43"^^xsd:integer .
+_:c3_s2i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:JohanRojas ; ex:minuto "68"^^xsd:integer .
+_:c4_s2i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Fabio ; ex:minuto "88"^^xsd:integer .
+_:c5_s2i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Freytes ; ex:minuto "31"^^xsd:integer .
+_:c6_s2i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:LuchoAcosta ; ex:minuto "54"^^xsd:integer .
+_:c7_s2i a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:JohnKennedy ; ex:minuto "76"^^xsd:integer .
+_:c8_s2i a ex:Cartao ; ex:tipoCartao "Vermelho" ; ex:envolveJogador ex:Zubeldia ; ex:minuto "23"^^xsd:integer .
+_:c9_s2i a ex:Cartao ; ex:tipoCartao "Vermelho" ; ex:envolveJogador ex:FacundoBernal ; ex:minuto "63"^^xsd:integer .
+
+
+### 5. SEMIFINAL 2 - JOGO DE VOLTA
+ex:Semifinal2_Volta a ex:Partida ;
+    ex:mandante ex:Fluminense ;
+    ex:visitante ex:Vasco ;
+    ex:golsMandante "1"^^xsd:integer ;
+    ex:golsVisitante "1"^^xsd:integer ;
+    ex:estadio ex:Maracana ;
+    ex:data "2026-03-01"^^xsd:date ;
+    ex:horario "18:00" ;
+    ex:tecnicoMandante ex:Zubeldia ;
+    ex:temEvento _:c1_s2v , _:c2_s2v , _:c3_s2v , _:c4_s2v , _:c5_s2v , _:c6_s2v , _:c7_s2v , _:c8_s2v , _:c9_s2v ;
+    ex:temEvento _:s1_s2v , _:s2_s2v .
+
+_:c1_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Rene ; ex:minuto "12"^^xsd:integer .
+_:c2_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:SamuelXavier ; ex:minuto "29"^^xsd:integer .
+_:c3_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Freytes ; ex:minuto "47"^^xsd:integer .
+_:c4_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Ignacio ; ex:minuto "71"^^xsd:integer .
+_:c5_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:KevinSerna ; ex:minuto "83"^^xsd:integer .
+_:c6_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Canobbio ; ex:minuto "90"^^xsd:integer .
+_:c7_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:RobertRenan ; ex:minuto "35"^^xsd:integer .
+_:c8_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:Barros ; ex:minuto "58"^^xsd:integer .
+_:c9_s2v a ex:Cartao ; ex:tipoCartao "Amarelo" ; ex:envolveJogador ex:LucasPiton ; ex:minuto "76"^^xsd:integer .
+
+_:s1_s2v a ex:Substituicao ; ex:entraJogador ex:AndresGomez ; ex:minuto "55"^^xsd:integer .
+_:s2_s2v a ex:Substituicao ; ex:entraJogador ex:LucasPiton ; ex:minuto "60"^^xsd:integer .
