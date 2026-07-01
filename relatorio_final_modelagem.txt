@@ -1,0 +1,58 @@
+RELATÓRIO FINAL DA MODELAGEM DO GRAFO DE CONHECIMENTO
+Projeto: Campeonato Carioca de Futebol 2026
+
+1. Objetivo
+O objetivo deste projeto foi representar, em formato RDF/OWL, um cenário esportivo completo e estruturado do Campeonato Carioca de Futebol 2026. A modelagem foi elaborada para capturar não apenas os resultados finais das partidas, mas também o contexto da competição, os clubes participantes, os estádios, as pessoas envolvidas e os eventos internos dos jogos, como gols, cartões e substituições.
+
+2. Decisões de modelagem
+A modelagem adotou uma estrutura baseada em classes e propriedades semânticas, com o intuito de tornar o grafo claro, extensível e adequado para consultas. As principais classes foram:
+- Campeonato: representa a competição como um todo;
+- Clube: representa os times participantes;
+- Estadio: representa os locais das partidas;
+- Pessoa: classe geral para indivíduos envolvidos no contexto esportivo;
+- Jogador, Treinador e Arbitro: subclasses de Pessoa;
+- Partida: representa cada jogo oficial;
+- EventoJogo: classe geral para acontecimentos dentro das partidas;
+- Gol, Cartao e Substituicao: subclasses de EventoJogo.
+
+As propriedades foram organizadas para expressar relações importantes do domínio. Entre elas, destacam-se:
+- mandante e visitante: ligam cada partida ao clube local e ao clube visitante;
+- estadio, data, horario, publico e renda: descrevem o contexto da partida;
+- arbitroPrincipal, tecnicoMandante e tecnicoVisitante: associam elementos institucionais e técnicos;
+- temEvento: conecta uma partida aos eventos ocorridos nela;
+- envolveJogador, saiJogador, entraJogador e minuto: detalham os micro-eventos;
+- tipoCartao: especifica a natureza do cartão (amarelo ou vermelho);
+- rivalDe: representa rivalidades entre clubes de forma simétrica.
+
+Além disso, foram adotadas decisões importantes para garantir consistência semântica:
+- propriedades funcionais foram usadas para fatos com valor único, como nome, data, estádio, placar e árbitro principal;
+- nós em branco foram empregados para representar fatos complexos e n-ários, especialmente em eventos como cartões e substituições;
+- literais tipados, como xsd:integer, xsd:decimal e xsd:date, foram utilizados para garantir precisão e interoperabilidade;
+- rótulos com idioma foram usados para nomes e descrições, favorecendo consultas e integração com outras bases.
+
+3. Justificativa das escolhas adotadas
+A divisão entre entidades macro e eventos detalhados foi essencial para que o grafo refletisse tanto a estrutura do campeonato quanto o desenrolar das partidas. A separação entre clubes, jogadores, treinadores, árbitros e eventos permitiu modelar o domínio com maior fidelidade sem perder clareza.
+
+A utilização de nós em branco foi particularmente relevante para representar relações que dependem de mais de um valor ao mesmo tempo. Por exemplo, um cartão precisa estar associado ao jogador que recebeu a advertência, ao minuto em que ocorreu e ao tipo de cartão. Essa escolha tornou a representação mais precisa e natural.
+
+As propriedades funcionais ajudaram a evitar ambiguidades em atributos centrais, enquanto os tipos de literal garantiram que valores como público, renda e datas fossem tratados de forma semântica correta.
+
+4. Resultados obtidos
+A modelagem permitiu representar com sucesso um conjunto relevante de fatos sobre o campeonato. O grafo inclui:
+- quatro clubes principais: Flamengo, Fluminense, Vasco e Madureira;
+- cinco partidas oficiais, incluindo a grande final e as semifinais;
+- informações sobre placar, estádio, data, horário, público, renda e árbitro principal;
+- eventos detalhados de cada jogo, como gols, cartões e substituições.
+
+A partir das consultas SPARQL realizadas, foi possível extrair e validar diversos resultados importantes:
+- identificação dos jogos com mandante, visitante e placares;
+- recuperação de gols marcados após determinado minuto;
+- localização de jogadores cujo nome segue um padrão textual;
+- verificação de partidas sem árbitro principal;
+- identificação do jogador com maior número de gols na competição;
+- listagem de cartões registrados, incluindo jogador, minuto e tipo do cartão.
+
+Esses resultados mostram que o grafo não apenas armazena fatos, mas também permite consultas semânticas que revelam padrões e detalhes relevantes do campeonato.
+
+5. Conclusão
+A modelagem desenvolvida atingiu os objetivos propostos: tornou o domínio do futebol organizado, semântico e consultável. O grafo criado oferece uma base sólida para futuras extensões, como a inclusão de novas temporadas, mais partidas, estatísticas avançadas e integração com outras fontes de conhecimento. A combinação entre estrutura conceitual, uso adequado de propriedades e representação de eventos detalhados tornou o resultado coerente, completo e útil para análise semântica.

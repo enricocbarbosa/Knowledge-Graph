@@ -1,0 +1,29 @@
+RELATÓRIO DE MODELAGEM E PRINCIPAIS RESULTADOS
+Projeto: Grafo de Conhecimento do Campeonato Carioca de Futebol 2026
+
+1. Objetivo
+O objetivo deste trabalho foi representar, em formato RDF/OWL, um cenário esportivo completo do Campeonato Carioca de Futebol 2026. A modelagem incluiu o campeonato como um todo, clubes participantes, estádios, pessoas envolvidas, partidas oficiais e os micro-eventos internos de cada jogo, como gols, cartões e substituições.
+
+2. Decisões de modelagem
+A estrutura foi organizada em classes principais para refletir o domínio de forma clara e extensível. Foram definidas as classes Campeonato, Clube, Estadio, Pessoa, Partida e EventoJogo. A classe Pessoa foi especializada em Jogador, Treinador e Arbitro, enquanto EventoJogo foi especializada em Gol, Cartao e Substituicao.
+
+Para representar relações importantes, foram adotadas propriedades específicas para ligar entidades do domínio, como mandante, visitante, arbitroPrincipal, tecnicoMandante, tecnicoVisitante, temEvento, envolveJogador, saiJogador e entraJogador. A propriedade rivalDe foi modelada como simétrica para expressar rivalidades entre clubes.
+
+Além disso, foram aplicadas decisões de uso de dados e semântica mais rigorosa. Propriedades como nome, estadio, data, horario, publico, renda, campeao, viceCampeao e minuto foram tratadas como funcionais, reduzindo ambiguidades e garantindo maior consistência na representação. Para descrever dados complexos, optou-se pelo uso de nós em branco (blank nodes), principalmente para associar um evento a um jogador, a um minuto e a um tipo de ocorrência simultaneamente.
+
+Também foram empregados tipos explícitos de literais, como xsd:integer, xsd:decimal e xsd:date, além de rótulos com idioma para nomes e descrições. Essa escolha melhora a interoperabilidade do grafo e facilita consultas e integração com outras bases de conhecimento.
+
+3. Justificativa das escolhas adotadas
+A separação entre entidades macro, como campeonato e clubes, e entidades de evento, como partidas e lances, tornou a modelagem mais precisa e mais fácil de consultar. A divisão entre classes e subclasses permite responder perguntas semânticas de forma natural, como quem participou de uma partida, quais jogadores marcaram gols, quais clubes foram rivais e quais ocorrências aconteceram em determinado minuto.
+
+O uso de blank nodes foi essencial para modelar fatos n-ários, que não podem ser representados de forma simples por uma única propriedade. Por exemplo, um cartão precisa estar associado a um jogador, a um minuto e ao tipo de cartão. Esse padrão preserva a riqueza do contexto sem criar uma estrutura desnecessariamente rígida.
+
+4. Principais resultados obtidos
+O grafo produzido representa um campeonato com quatro clubes principais: Flamengo, Fluminense, Vasco e Madureira. Foram modeladas cinco partidas oficiais: a grande final, duas partidas da semifinal entre Flamengo e Madureira e duas partidas da semifinal entre Vasco e Fluminense.
+
+Foram registrados dados como placar, estádio, data, horário, público, renda e árbitro principal. Também foram incluídos lances detalhados das partidas, com gols, cartões e substituições, permitindo uma visão mais completa do desenrolar dos jogos.
+
+No nível semântico, o grafo permite responder perguntas como: qual clube foi campeão, qual foi o vice-campeão, quem foi o artilheiro, quem teve destaque individual e quais jogadores receberam cartões em cada partida. Os resultados declarados no modelo indicam Flamengo como campeão, Fluminense como vice-campeão, Pedro e Patryck Magalhães como artilheiros, Fábio como melhor jogador e Luis Zubeldía como melhor treinador.
+
+5. Conclusão
+A modelagem desenvolvida alcançou o objetivo de representar o contexto esportivo de forma estruturada, semântica e expandível. O grafo não apenas descreve fatos do campeonato, mas também organiza relações e eventos de maneira que pode ser reutilizado para consultas, análises e futuras ampliações, como novas temporadas, mais partidas e estatísticas detalhadas de desempenho.

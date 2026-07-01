@@ -112,6 +112,34 @@ for row in g.query(q5):
 print()
 
 
+# 6. Consulta sobre cartões
+# Lista os cartões registrados, com a partida, o jogador, o minuto e o tipo do cartão.
+q6 = """
+PREFIX ex: <http://example.org/>
+SELECT ?partida ?nomeMandante ?nomeVisitante ?nomeJogador ?minuto ?tipoCartao WHERE {
+    ?partida a ex:Partida ;
+             ex:mandante ?timeMandante ;
+             ex:visitante ?timeVisitante ;
+             ex:temEvento ?evento .
+    ?evento a ex:Cartao ;
+            ex:envolveJogador ?jogador ;
+            ex:minuto ?minuto ;
+            ex:tipoCartao ?tipoCartao .
+    ?timeMandante ex:nome ?nomeMandante .
+    ?timeVisitante ex:nome ?nomeVisitante .
+    ?jogador ex:nome ?nomeJogador .
+    FILTER (lang(?nomeMandante) = "pt")
+    FILTER (lang(?nomeVisitante) = "pt")
+    FILTER (lang(?nomeJogador) = "pt")
+}
+ORDER BY ?partida ?minuto
+"""
+print("Query 6:")
+for row in g.query(q6):
+    print(f"{row.minuto}' - {row.nomeJogador} ({row.tipoCartao}) - {row.nomeMandante} x {row.nomeVisitante}")
+print()
+
+
 # Extra — lang()
 # Lista os clubes mostrando apenas o nome em português, aproveitando que ex:Maracana tem dois labels de idiomas diferentes em ex:nome.
 q_extra = """
